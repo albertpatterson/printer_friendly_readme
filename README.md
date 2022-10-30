@@ -7,4 +7,4 @@ In some cases likes workshops, classrooms, etc it can be helpful to have a print
 - CD to the directory with the desired README.md
 - `npx make-printer-friendly-readme`
 
-A new file named README_PRINTABLE.md will be created
+A new file named README_PRINTER_FRIENDLY.md will be created
