@@ -1,5 +1,5 @@
 {
-  "name": "printer_friendly_readme",
+  "name": "printer-friendly-readme",
   "version": "1.0.0",
   "description": "Create a printer friendly version of a README.md file",
   "main": "index.js",
