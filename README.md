@@ -8,3 +8,7 @@ In some cases likes workshops, classrooms, etc it can be helpful to have a print
 - `npx make-printer-friendly-readme`
 
 A new file named README_PRINTER_FRIENDLY.md will be created
+
+## Demo
+
+![Demo](./doc/demo.png 'Demo')
