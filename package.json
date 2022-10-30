@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "expr": "cd expr; node ../index.js"
+    "expr": "cd expr; node ../index.js",
+    "example": "cd example; node ../index.js"
   },
   "repository": {
     "url": "https://github.com/albertpatterson/printer_friendly_readme"
