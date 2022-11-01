@@ -4,20 +4,23 @@ import path from 'path';
 import fs from 'fs';
 import process from 'process';
 const readmePath = path.resolve(process.cwd(), 'README.md');
+const packageJsonPath = path.resolve(process.cwd(), 'package.json');
 const writePath = path.resolve(process.cwd(), 'README_PRINTER_FRIENDLY.md');
 
 (async () => {
   await fs.promises.access(readmePath, fs.constants.F_OK);
 
-  const markdown = await fs.promises.readFile(readmePath);
+  const markdownStream = await fs.promises.readFile(readmePath);
+  const markdown = markdownStream.toString();
 
-  const transformed = makePrinterFrieldly(markdown.toString());
+  const transformed = await makePrinterFrieldly(markdown);
 
   await fs.promises.writeFile(writePath, transformed);
 })();
 
-function makePrinterFrieldly(markdown) {
-  let printerFriendly = makeLinksPrinterFriendly(markdown);
+async function makePrinterFrieldly(markdown) {
+  let printerFriendly = await addRepoUrl(markdown);
+  printerFriendly = makeLinksPrinterFriendly(printerFriendly);
 
   return printerFriendly;
 }
@@ -45,4 +48,41 @@ function makeLinksPrinterFriendly(markdown) {
   parts.push(markdown.slice(prevEnd, markdown.length));
 
   return parts.join('');
+}
+
+const HEADER_RE = /^#[^\n]*/;
+async function addRepoUrl(markdown) {
+  const repoUrl = await getRepoUrl();
+
+  if (!repoUrl) {
+    return markdown;
+  }
+
+  const match = markdown.match(HEADER_RE);
+
+  if (!match) {
+    return markdown;
+  }
+
+  const matchLength = match[0].length;
+
+  return (
+    markdown.slice(0, matchLength) +
+    ' ' +
+    repoUrl +
+    markdown.slice(matchLength, markdown.length)
+  );
+}
+
+async function getRepoUrl() {
+  try {
+    const packageJsonStream = await fs.promises.readFile(packageJsonPath);
+    const packageJsonStr = packageJsonStream.toString();
+    const packageJson = JSON.parse(packageJsonStr);
+    const url = packageJson.repository?.url || null;
+
+    return url;
+  } catch {
+    return null;
+  }
 }

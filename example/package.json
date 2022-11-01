@@ -1,0 +1,19 @@
+{
+  "name": "printer-friendly-readme-example",
+  "version": "1.0.2",
+  "description": "Create a printer friendly version of a README.md file",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "expr": "cd expr; node ../index.js",
+    "example": "cd example; node ../index.js"
+  },
+  "repository": {
+    "url": "https://github.com/albertpatterson/printer_friendly_readme_example"
+  },
+  "keywords": [],
+  "author": "Albert Patterson",
+  "license": "ISC",
+  "type": "module",
+  "bin": "./index.js"
+}
